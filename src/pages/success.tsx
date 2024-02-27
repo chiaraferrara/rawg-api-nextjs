@@ -1,5 +1,5 @@
 import { AppContext, sliceProducts } from "@/ContextProvider";
-import { Div, Wrapper } from "@/styles/globals";
+import { Div,  Wrapper } from "@/styles/globals";
 import { Title } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
