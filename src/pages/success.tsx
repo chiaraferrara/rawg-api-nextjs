@@ -34,7 +34,7 @@ export default function Success() {
       <Div>
         <Wrapper>
           <h2>Success</h2>
-          <p>You're being redirected...</p>
+          <p>You&rsquo;re being redirected...</p>
         </Wrapper>
       </Div>
     </>
