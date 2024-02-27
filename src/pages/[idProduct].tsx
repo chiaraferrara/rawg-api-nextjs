@@ -6,15 +6,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sliceProducts } from "../ContextProvider";
 import CardActions from "@mui/material/CardActions";
-import { API_KEY } from "./api/apiKey";
+import { API_KEY } from "../../api";
 
 export default function ProductPage() {
   const router = useRouter();
   const { idProduct } = router.query;
   const [product, setProduct] = useState<any>(null);
   const { addToCart } = useContext(AppContext);
-    // const {setCartProducts} = useContext(AppContext);
-    // const { cartProducts } = useContext(AppContext);
   const dispatch = useDispatch();
   
 

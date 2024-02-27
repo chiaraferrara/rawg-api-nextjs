@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { Cart, Product, TContext } from "./declarations";
 import { useRouter } from "next/router";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { API_KEY } from "./pages/api/apiKey";
+import { API_KEY } from "../api";
 
 export const sliceProducts = createSlice({
   name: "cartProducts",
