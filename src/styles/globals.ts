@@ -9,6 +9,15 @@ export const Container = styled.div`
   text-align: center;
 `;
 
+
+export const CartWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-around;
+    align-items: stretch;
+`;
+
 export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -61,12 +70,15 @@ export const Btn = styled.button`
 export const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  
+  
 `;
 
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 `;
 
 export const Wrapper = styled.div`
@@ -78,12 +90,16 @@ export const Wrapper = styled.div`
 
 export const Div = styled.div`
   font-family: "Arial", sans-serif;
-  height: 80vh;
+  height: fit-content;
+  min-height: 100vh;
+ 
 `;
 
+
+
 export const Img = styled.img`
-  max-width: 250px;
-  max-height: 150px;
+  max-width: 140px;
+  max-height: 20%;
   margin: 0.5rem;
 `;
 
@@ -92,6 +108,7 @@ export const ProductInfo = styled.div`
   flex-flow: row wrap;
   background-color: #eb0029;
   padding: 0.5rem;
+  color: white;
 `;
 
 export const FooterContainer = styled.footer`
@@ -100,14 +117,15 @@ export const FooterContainer = styled.footer`
   background-color: #1e1e1e;
   color: white;
   height: fit-content;
-  position: relative;
-    bottom: 0;
-    width: 100%;
+  padding: 20px;
     padding: 20px 0;
   a,
   a:visited {
       color: white;
       text-decoration: none;
   }
+
+    bottom: 0;
+    width: 100%;
  
 `;
