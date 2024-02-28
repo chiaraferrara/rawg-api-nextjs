@@ -2,7 +2,24 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { Cart, Product, TContext } from "./declarations";
 import { useRouter } from "next/router";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { API_KEY } from "../api";
+
+
+export const getServerSideProps = async () => {
+  try {
+    const apiKey = process.env.API_KEY;
+
+    if (!apiKey) {
+      throw new Error('API key is not defined.');
+    }
+
+    const res = await fetch(`https://api.rawg.io/api/games?&key=${apiKey}`);
+    const data = await res.json();
+
+    return { props: { data, apiKey } };
+  } catch (error : any) {
+    return { props: { error: error.message } };
+  }
+};
 
 export const sliceProducts = createSlice({
   name: "cartProducts",
@@ -40,11 +57,19 @@ export const AppContext = createContext<TContext>({
   error: "",
 });
 
+// interface Props {
+//   children: ReactNode;
+// }
+
 interface Props {
   children: ReactNode;
+  data: any;
+  apiKey: string;
+  error: string;
 }
 
-export function ContextProvider({ children }: Props) {
+export function ContextProvider({ children, data, apiKey, error: string }: Props) {
+
   const [cart, setCart] = useState<TContext["cart"]>([]);
   const [paid, setPaid] = useState<TContext["paid"]>(false);
   const [products, setProducts] = useState<TContext["products"]>(null);
@@ -147,14 +172,11 @@ export function ContextProvider({ children }: Props) {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://api.rawg.io/api/games?&key=${API_KEY}`
-      );
+      const response = await fetch(`https://api.rawg.io/api/games?&key=${apiKey}`);
       const data = await response.json();
       setProducts(data.results);
       setLoading(false);
-      console.log(products)
-    } catch (error: any) {
+    } catch (error : any) {
       setError(error.message);
       setLoading(false);
     }
@@ -164,51 +186,51 @@ export function ContextProvider({ children }: Props) {
     setPaid(false);
   };
 
-  
-
-  // const getProductQuantity = (idProduct: Product["id"]) => {
-  //   const found = cart.find((el) => el.id === idProduct);
-  //   const product = products?.find((el) => el.id === idProduct);
-  //   if (found) {
-  //     return (product?.qty ?? 0) - found.quantity;
-  //   } 
-  //   if (!!product) {
-  //     return product.qty ?? 0;
-  //   }
-  //   return 0;
-  // };
-
   const getTotalPrice = () => {
     return cart.reduce((acc, el) => {
       return acc + el.price * el.quantity;
     }, 0);
   };
 
+  // const fetchData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     setProducts(data.results);
+  //     setLoading(false);
+  //   } catch (error: any) {
+  //     setError(error.message);
+  //     setLoading(false);
+  //   }
+  // };
+
   useEffect(() => {
-    getProducts();
+    console.log(apiKey)
+    if (!products && !error) {
+      getProducts();
+    }
   }, []);
+
 
   return (
     <AppContext.Provider
-      value={{
-        cart,
-        setCart,
-        paid,
-        products,
-        cartProducts,
-        setCartProducts,
-        addToCart,
-        removeFromCart,
-        reduceQuantity,
-        increaseQuantity,
-        // getProductQuantity,
-        getTotalPrice,
-        pay,
-        loading,
-        error,
-        done,
-      }}
-    >
+    value={{
+      cart,
+      setCart,
+      paid,
+      products,
+      cartProducts,
+      setCartProducts,
+      addToCart,
+      removeFromCart,
+      reduceQuantity,
+      increaseQuantity,
+      getTotalPrice,
+      pay,
+      loading,
+      error,
+      done,
+    }}
+  >
       {children}
     </AppContext.Provider>
   );

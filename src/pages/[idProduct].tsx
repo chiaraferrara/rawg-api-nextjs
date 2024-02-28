@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sliceProducts } from "../ContextProvider";
 import CardActions from "@mui/material/CardActions";
-import { API_KEY } from "../../api";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -22,16 +21,20 @@ export default function ProductPage() {
   };
 
 
-  useEffect(() => {
-    if (idProduct) {
-      getProductDetails();
-    }
-  }, [idProduct]);
+  // useEffect(() => {
+  //   if (idProduct) {
+  //     getProductDetails();
 
+  //   }
+  //   console.log(process.env.API_KEY)
+  // }, [idProduct]);
+
+ 
 
   const getProductDetails = async () => {
     const response = await fetch(
-      `https://api.rawg.io/api/games/${idProduct}?key=${API_KEY}`
+      `https://api.rawg.io/api/games/${idProduct}?key=${process.env.API_KEY}`
+      
     );
     const data = await response.json();
     setProduct(data);
