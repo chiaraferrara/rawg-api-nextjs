@@ -17,8 +17,8 @@ export default function ProductPage() {
   
 
 
- const onClickAddToCart = () => {
-     dispatch(sliceProducts.actions.setCartProducts(1));
+ const onClickAddToCart = (payload : any) => {
+     dispatch(sliceProducts.actions.setCartProducts(payload));
   };
 
 
@@ -54,14 +54,13 @@ return (
                         <p dangerouslySetInnerHTML={{ __html: product.description }}></p>
                         
                         <br/>
-                        <p></p>
                         
                 </FlexRow>
                 
                 <ProductInfo>Release: {product.released} | Rating : {product.rating}</ProductInfo>
                 <CardActions><Button onClick={() => {
                     addToCart(product.id);
-                    onClickAddToCart();
+                    onClickAddToCart(1);
                 }}>Add To Cart</Button></CardActions>
                 </Wrapper>
                 
