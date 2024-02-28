@@ -36,8 +36,9 @@ export default function Cart() {
 
   const dispatch = useDispatch();
 
-  const onClickMinus = () => {
-    dispatch(sliceProducts.actions.decreaseCartProducts());
+  const onClickRemove = (payload : any) => {
+    dispatch(sliceProducts.actions.decreaseCartProducts(payload));
+    console.log(payload)
   };
   const onClickPlus = () => {
     dispatch(sliceProducts.actions.setCartProducts(1));
@@ -76,7 +77,7 @@ export default function Cart() {
                    <Btn
                   onClick={() => {
                     reduceQuantity(el.id);
-                    onClickMinus();
+                    onClickRemove(1);
                   }}
                 >
                   -
@@ -94,7 +95,7 @@ export default function Cart() {
                  <Button
                 onClick={() => {
                   removeFromCart(el.id);
-                  setCartProducts(cartProducts - el.quantity);
+                  onClickRemove(el.quantity);
                 }}
               >
                 remove

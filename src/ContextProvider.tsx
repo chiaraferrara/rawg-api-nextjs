@@ -9,7 +9,7 @@ export const sliceProducts = createSlice({
   initialState: 0,
   reducers: {
     setCartProducts: (state, action) => state + action.payload,
-    decreaseCartProducts: (state) => state - 1,
+    decreaseCartProducts: (state, action) => state - action.payload,
     emptyCartProducts: (state) => 0,
 
   },
